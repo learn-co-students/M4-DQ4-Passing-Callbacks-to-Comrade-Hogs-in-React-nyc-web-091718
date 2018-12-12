@@ -8,7 +8,7 @@ export default class GalaxySNote7 extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      panicked: false,
+      panicked: (this.props.environment === "inhospitable")
     }
 
     this.squeelAudio = new Audio(wreee);
@@ -19,13 +19,17 @@ export default class GalaxySNote7 extends React.Component {
   }
 
   throwAFit = () => {
+    this.props.alterEnvironment("inhospitable")
   }
 
   relax = () => {
+    this.setState({panicked: false})
   }
 
   exclaim = () => {
     if (this.state.panicked) return
+    this.setState({panicked: true})
+    setTimeout(this.relax, 3500)
     this.exclaimAudio.play()
     this.squeelAudio.play()
   }
